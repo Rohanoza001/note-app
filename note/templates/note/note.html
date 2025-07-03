@@ -1,0 +1,213 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Create an Account</title>
+</head>
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        background: url("{% static 'image.png' %}");
+        background-size: cover;
+    }
+
+    form {
+        position: absolute;
+        right: 250px;
+        top: 100px;
+    }
+
+    input {
+        border-radius: 4px;
+        border: 1px solid black;
+        padding: 15px;
+        width: 400px;
+        height: 45px;
+        background-color: transparent;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        margin-bottom: 15px;
+        color: black;
+
+    }
+    textarea {
+        border-radius: 4px;
+        border: 1px solid black;
+        padding: 15px;
+        width: 400px;
+        height: 200px;
+        background-color: transparent;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        margin-bottom: 15px;
+        color: black;
+
+    }
+
+    h1 {
+        text-align: center;
+        margin-bottom: 20px;
+        font-family: 'Brush Script MT', cursive;
+        font-size: 100px;
+    }
+
+    #submit {
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    input:focus {
+        outline: none;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        nav {
+            flex-direction: column;
+            margin: 20px;
+            padding: 15px;
+        }
+        
+        nav h1 {
+            font-size: 30px;
+            margin-bottom: 20px;
+        }
+        
+        nav div {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            width: 100%;
+        }
+        
+        nav div a {
+            width: 100%;
+            margin-right: 0;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        
+        form {
+            position: relative;
+            right: auto;
+            top: auto;
+            margin: 50px auto;
+            width: 90%;
+            max-width: 400px;
+        }
+        
+        input, textarea {
+            width: 100%;
+            max-width: 400px;
+        }
+        
+        h1 {
+            font-size: 60px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        nav {
+            margin: 10px;
+            padding: 10px;
+        }
+        
+        nav h1 {
+            font-size: 25px;
+        }
+        
+        form {
+            margin: 30px auto;
+            width: 95%;
+        }
+        
+        h1 {
+            font-size: 40px;
+        }
+        
+        input {
+            padding: 12px;
+            height: 40px;
+        }
+        
+        textarea {
+            height: 150px;
+        }
+    }
+
+    @media (max-width: 320px) {
+        nav h1 {
+            font-size: 20px;
+        }
+        
+        h1 {
+            font-size: 30px;
+        }
+        
+        input {
+            padding: 10px;
+            height: 35px;
+            font-size: 14px;
+        }
+        
+        textarea {
+            height: 120px;
+            font-size: 14px;
+        }
+    }
+</style>
+
+<body>
+    <nav style="display: flex; align-items: center; justify-content: space-between; margin: 20px 50px;">
+        <h1 style="font-family: 'Brush Script MT', cursive; font-size: 40px; color: #333;">Create Note</h1>
+        <div>
+            <a href="{% url 'homepage' %}" style="text-decoration: none; color: black; border: 1px solid black; padding: 8px 16px; border-radius: 5px; margin-right: 10px;">Home</a>
+            <a href="{% url 'logout' %}" style="text-decoration: none; color: black; border: 1px solid black; padding: 8px 16px; border-radius: 5px;">Logout</a>
+        </div>
+    </nav>
+    
+    <div>
+        <form action="{% url 'create_note_user' %}" method="post">
+            {% csrf_token %}
+            <table>
+                <tr">
+                    <h1>Create a Note</h1>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="text" name="title" placeholder="Title">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <textarea name="description" id="description" placeholder="Write your Note"></textarea>
+                        </td>
+                    <tr>
+                        <td>
+                            <input type="submit" value="Submit" id="submit">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            {% if error %}<p style="color:red; text-align: center;">{{ error }}</p>{% endif %}
+                        </td>
+                    </tr>
+            </table>
+        </form>
+    </div>
+</body>
+
+</html>
