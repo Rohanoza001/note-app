@@ -7,7 +7,6 @@ from django.contrib.auth.decorators import login_required
 
 def register(request):
     if request.method == "POST":
-        # If someone posts to this view, redirect them to register_user
         return redirect('register_user')
     return render(request, 'note/register.html')
 
@@ -32,10 +31,9 @@ def register_user(request):
             msg2 = "Email already Exist"
             return render(request, 'note/register.html', {'msg2': msg2})
 
-        # Correct: include username
         User_Create = User.objects.create_user(username=name, email=email, password=password)
 
-        # Check your Register model structure
+
         Register.objects.create(user=User_Create, contact=contact) # ignore
 
         request.session['user_id'] = User_Create.id
@@ -49,7 +47,6 @@ def sign_in(request):
         email = request.POST['email']
         password = request.POST['password']
         
-        # Try to authenticate with email as username
         user_obj = User.objects.get(email=email)
         user = authenticate(request, username=user_obj.username, password=password)
             
@@ -81,7 +78,6 @@ def create_note_user(request):
             note.objects.create(title=title, description=description, user=user)
             return redirect('homepage')
         except Exception as e:
-            # Handle any errors during note creation
             return render(request, 'note/note.html', {'error': 'Failed to create note. Please try again.'})
     return render(request, 'note/note.html')
 
